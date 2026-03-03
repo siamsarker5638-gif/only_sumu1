@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sumu 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+padding:0;
+font-family:'Poppins',sans-serif;
+text-align:center;
+overflow:hidden;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+color:white;
+transition:0.5s;
+}
+.dark{
+background:linear-gradient(135deg,#141e30,#243b55);
+}
+.container{
+margin-top:10%;
+position:relative;
+z-index:2;
+}
+h1{
+font-size:40px;
+margin-bottom:10px;
+}
+p{
+font-size:20px;
+margin-bottom:20px;
+}
+#message{
+font-size:24px;
+min-height:80px;
+margin:20px;
+transition:0.5s;
+}
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+margin:10px;
+}
+.yes{background:white;color:#ff4e8a;}
+.no{background:#ff4e8a;color:white;position:absolute;}
+.theme-toggle{
+position:absolute;
+top:15px;
+right:15px;
+}
+.heart{
+position:absolute;
+color:red;
+animation:float 5s linear infinite;
+}
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+<div class="container">
+<img src="photo.jpg" alt="Sumu" style="width:200px;height:200px;border-radius:50%;border:5px solid white;margin-bottom:20px;">
+<h1>Siam ❤️ Sumu</h1>
+<p></p>
+
+<div id="message"></div>
+
+<button class="yes" onclick="celebrate()">Yes 💖</button>
+<button class="no" onmouseover="moveButton()">No 😜</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+// ===== DARK/LIGHT THEME =====
+function toggleTheme(){ document.body.classList.toggle("dark"); }
+
+// ===== NO BUTTON MOVE =====
+function moveButton(){
+let btn=document.querySelector(".no");
+btn.style.left=Math.random()*window.innerWidth+"px";
+btn.style.top=Math.random()*window.innerHeight+"px";
+}
+
+// ===== AUTO MESSAGES TYPEWRITER =====
+let messages = [
+"Sumu... ekta kotha bolbo? 😌",
+"Jani amra sudhu 4 din dhore kotha boltasi...",
+"Kintu tomar voice ta shunlei mon ta shanti pay 💙",
+"Ami tomake ekhono dekhi nai...",
+"Kintu mone hoy ami tomake onek age thekei chini...",
+"Ami chai ei journey ta tomar sathei continue korte...",
+"Sumu... tumi ki amar special keu hote raji? ❤️"
+];
+let i=0;
+let speed=50;
+function typeWriter(text,callback){
+let j=0;
+document.getElementById("message").innerHTML="";
+let typing=setInterval(function(){
+if(j<text.length){
+document.getElementById("message").innerHTML+=text.charAt(j);
+j++;
+}else{
+clearInterval(typing);
+setTimeout(callback,1500);
+}
+},speed);
+}
+function showNextMessage(){
+if(i<messages.length){
+typeWriter(messages[i],function(){
+i++;
+showNextMessage();
+});
+}
+}
+window.onload=function(){ showNextMessage(); };
+
+// ===== FLOATING HEARTS =====
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove();},5000);
+},300);
+
+// ===== YES CLICK CELEBRATION + SPECIAL POPUP =====
+function celebrate(){
+confetti({particleCount:300, spread:120, origin:{y:0.6}});
+
+setTimeout(function(){
+    // Dim background
+    let bg=document.createElement("div");
+    bg.id="popup-bg";
+    bg.style.cssText="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99;";
+    document.body.appendChild(bg);
+
+    // Popup card
+    let card=document.createElement("div");
+    card.id="popup-card";
+    card.style.cssText="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);"+
+    "background:#fff; color:#ff4e8a; padding:30px; border-radius:20px; text-align:center; z-index:100; width:80%; max-width:400px; box-shadow:0 0 20px rgba(255,0,128,0.6);";
+    card.innerHTML=`
+    <h2 style="font-size:30px; margin-bottom:20px;">Sumu ❤️</h2>
+    <p style="font-size:18px; margin-bottom:20px;">
+    Tumi amar moner ekta onek special part…<br>
+    Ami chai sob shomoy tomar kache thakte.
+    </p>
+    <button onclick="showFinalPromise()" style="
+    padding:12px 25px; font-size:18px; border:none; border-radius:25px;
+    background:#ff4e8a; color:white; cursor:pointer;">Read My Promise 💖</button>
+    `;
+    document.body.appendChild(card);
+},1000);
+}
+
+// ===== FINAL PROMISE =====
+function showFinalPromise(){
+let popupCard=document.getElementById("popup-card");
+let popupBg=document.getElementById("popup-bg");
+if(popupCard) popupCard.remove();
+if(popupBg) popupBg.remove();
+
+document.body.innerHTML = `
+<div style="text-align:center; padding-top:15%; color:#fff; font-family:'Poppins',sans-serif;">
+<h1 style="font-size:50px;">I Promise To 💍</h1>
+<p style="font-size:22px; line-height:1.6;">
+💖 Respect You<br>
+💖 Care For You<br>
+💖 Love You More Every Day
+</p>
+<h2>Forever Yours,❤️</h2>
+</div>
+`;
+}
+</script>
+</body>
+</html>
